@@ -1,3 +1,5 @@
+
+import prius from './Images/prius.jpg';
 /*
   This example requires some changes to your config:
   
@@ -44,7 +46,7 @@ const products = [
     id: 1,
     name: 'SEDAN CARS',
     href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+    imageSrc: prius,
     imageAlt: "Front of men's Basic Tee in black.",
     price: '$35',
     color: 'Black',
