@@ -1,18 +1,23 @@
-// Application.jsx
-
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';  // Correct import path
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { auth } from './firebase';  // Adjust the path based on your project structure
+import { auth } from './firebase'; // Import the Firebase auth module
+import ESTD2009 from '../Images/ESTD2009.png';
 
 function Application() {
+  // State to store form data and errors
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
+  const [error, setError] = useState('');
+  
+  // Hook to navigate to different routes
   const navigate = useNavigate();
 
+  // Handle input change event
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -21,22 +26,43 @@ function Application() {
     });
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Check if passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+    
     try {
+      // Create a new user with email and password
       await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       console.log('User registered successfully');
-      navigate('/home');
+      setError('');
+      
+      // Navigate to the home page after successful registration
+      navigate('/');
     } catch (error) {
       console.error('Error registering user:', error);
-      // Handle specific errors and display messages to the user
+      setError(error.message); // Display error message
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6">Register</h2>
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <img 
+            className="mx-auto h-14 w-auto rounded-full"
+            src={ESTD2009}
+            alt="TAPROBANA TAXI"
+          />
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            Create User Account
+          </h2>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
@@ -64,7 +90,7 @@ function Application() {
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
               Password
             </label>
@@ -77,6 +103,20 @@ function Application() {
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+          <div className="mb-6">
+            <label htmlFor="confirmPassword" className="block text-gray-700 font-bold mb-2">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
