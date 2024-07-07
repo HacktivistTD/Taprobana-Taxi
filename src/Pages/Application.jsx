@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesomeIcon
+import { faGoogle } from '@fortawesome/free-brands-svg-icons'; // Import the Google icon
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from './firebase'; // Import the Firebase auth module
 import ESTD2009 from '../Images/ESTD2009.png';
@@ -42,16 +44,37 @@ function Application() {
       console.log('User registered successfully');
       setError('');
       
-      // Navigate to the home page after successful registration
-      navigate('/');
+      // Navigate to the profile page after successful registration
+      navigate('/ProfilePage');
     } catch (error) {
       console.error('Error registering user:', error);
       setError(error.message); // Display error message
     }
   };
 
+  // Handle Google sign-in
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      console.log('User signed in with Google');
+      navigate('/'); // Redirect to home or profile page after successful sign-in
+    } catch (error) {
+      console.error('Error signing in with Google:', error);
+      setError(error.message); // Display error message
+    }
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="relative flex items-center justify-center min-h-screen">
+      {/* Background Image */}
+      <img
+        src="https://img.freepik.com/free-photo/taxi-sign-blurred-city-night-background_181624-17989.jpg?t=st=1719685755~exp=1719689355~hmac=69608b4d1f909f05d988cd657ac03e3e5cbabd3cd2d47f50bd83706261385951&w=1060"
+        alt=""
+        className="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center"
+      />
+      
+      {/* Form Container */}
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img 
@@ -75,6 +98,7 @@ function Application() {
               value={formData.name}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
           <div className="mb-4">
@@ -88,6 +112,7 @@ function Application() {
               value={formData.email}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
           <div className="mb-4">
@@ -101,6 +126,7 @@ function Application() {
               value={formData.password}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
           <div className="mb-6">
@@ -114,6 +140,7 @@ function Application() {
               value={formData.confirmPassword}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
           {error && <p className="text-red-500 text-sm">{error}</p>}
@@ -124,6 +151,14 @@ function Application() {
             Register
           </button>
         </form>
+        <div className="mt-4">
+          <button
+            onClick={handleGoogleSignIn}
+            className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+          >
+            <FontAwesomeIcon icon={faGoogle} size="2x" className="mr-2" /> Sign in with Google
+          </button>
+        </div>
       </div>
     </div>
   );
