@@ -21,8 +21,11 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "autoprefixer": "^10.4.19",
     "bootstrap": "^5.3.3",
+<<<<<<< HEAD
     "emailjs-com": "^3.2.0",
     "firebase": "^10.12.2",
+=======
+>>>>>>> 6a7fa965dbf1f979935ecaa09100e47789c73b9a
     "flowbite": "^2.3.0",
     "postcss": "^8.4.38",
     "react": "^18.2.0",
