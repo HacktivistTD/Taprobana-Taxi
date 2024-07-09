@@ -8,7 +8,7 @@ import About from './Pages/About';
 import Home from './Pages/Home';
 import Tours from './Pages/Tours';
 import Login from './Pages/Login';
-import Fleets from './Fleets';
+import Fleets from './Pages/Fleets';
 import Stay from './Pages/Stay';
 import  Application  from './Pages/Application';
 import Footerbar from './Components/Footerbar';
