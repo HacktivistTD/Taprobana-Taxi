@@ -1,5 +1,7 @@
 import { CheckIcon } from '@heroicons/react/20/solid'
 import { CloudArrowUpIcon, LockClosedIcon, ServerIcon } from '@heroicons/react/20/solid'
+import StackedLists from '../Components/StackedLists'
+
 const includedFeatures = [
   'To provide safe, efficient, and affordable cab services to locals and tourists alike.',
   'To showcase the warmth and hospitality that Sri Lanka is famous for.',
@@ -89,7 +91,7 @@ To connect you to all corners of the island, from bustling cityscapes to hidden 
         </div>
       </div>
 
-      
+      <StackedLists/>
     </div>
   )
 }

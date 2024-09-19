@@ -11,6 +11,8 @@ import Fleets from './Pages/Fleets';
 import Stay from './Pages/Stay';
 import  Application  from './Pages/Application';
 import Footerbar from './Components/Footerbar';
+import Dashboard from './Pages/Dashboard';
+
 
 
 const App = () => {
@@ -30,6 +32,7 @@ const App = () => {
         <Route path="/fleet" element={<Fleets/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/application" element={<Application/>}/>
+        <Route path="/dashboard" element={<Dashboard/>}/>
         
 
 
