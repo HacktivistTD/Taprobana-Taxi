@@ -1,13 +1,35 @@
 import { useState } from 'react';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import ESTD2009 from '../Images/ESTD2009.png';
 
 export default function Dashboard() {
   const [selectedExperience, setSelectedExperience] = useState('Driver');
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [title, setTitle] = useState(''); // New state for Title
+  const [experience, setExperience] = useState('');
 
   const handleSelect = (event) => {
     setSelectedExperience(event.target.textContent);
     setDropdownOpen(false); // Close dropdown after selection
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const db = getFirestore(); // Initialize Firestore
+    try {
+      await addDoc(collection(db, 'experiences'), {
+        fullName: fullName,
+        title: title, // Saving the title
+        experience: experience,
+        experienceAs: selectedExperience,
+        timestamp: new Date(),
+      });
+      alert("Experience submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting experience: ", error);
+    }
   };
 
   return (
@@ -25,7 +47,27 @@ export default function Dashboard() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            
+            {/* Title Section */}
+            <div>
+              <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">
+                Title
+              </label>
+              <div className="mt-2">
+                <input
+                  id="title"
+                  name="Title"
+                  type="text"
+                  required
+                  autoComplete="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
             <div>
               <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
                 Full Name
@@ -37,6 +79,8 @@ export default function Dashboard() {
                   type="text"
                   required
                   autoComplete="name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -52,6 +96,8 @@ export default function Dashboard() {
                   name="Experience"
                   type="text"
                   required
+                  value={experience}
+                  onChange={(e) => setExperience(e.target.value)}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>

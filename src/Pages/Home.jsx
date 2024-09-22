@@ -1,5 +1,6 @@
 import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon } from '@heroicons/react/24/outline'
 import Blog from '../Components/Blog'
+import Stats from '../Components/Stats'
 
     
 
@@ -42,12 +43,6 @@ const features = [
       'Relax and enjoy your shopping experience in Sri Lanka.Well take care of navigating the bustling streets and ensuring a safe return to your hotel with all your purchases.',
     icon: FingerPrintIcon,
   },
-]
-
-const stats = [
-  { id: 1, name: 'Transactions every 24 hours', value: '1 million +' },
-  { id: 2, name: 'Drivers working with us', value: '1000 +' },
-  { id: 3, name: 'New users annually', value: '46,000 +' },
 ]
 
 
@@ -187,23 +182,10 @@ export default function Home() {
 
 
     
-    <div className="bg-white py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <dl className="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
-          {stats.map((stat) => (
-            <div key={stat.id} className="mx-auto flex max-w-xs flex-col gap-y-4">
-              <dt className="text-base leading-7 text-gray-600">{stat.name}</dt>
-              <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-                {stat.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </div>
- 
-    </div>
+    
 
-      <Blog/>       
+      <Blog/>  
+      <Stats/>     
   
    </div>
 
