@@ -48,7 +48,7 @@ export default function Stay() {
           <img
             className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
             src={village} // Use the imported village image here
-            alt="Sri Lankan village"
+            alt="Sri Lankan village."
           />
          
         </div>
